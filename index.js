@@ -5,17 +5,22 @@ const { connectToMongoDB } = require("./connect.js")
 const URL = require("./models/url.js");
 const { render } = require("ejs");
 const staticRoute=require("./routes/staticRouter.js")
-const userRoute=require("./routes/user.js")
+const userRoute=require("./routes/user.js");
+const cookieParser = require("cookie-parser");
+const { restrictToLoggedinUserOnly, CheckAuth } = require("./middlewares/auth.js");
 const app = express()
 
 const PORT = 8000
 app.set('view engine',"ejs")
 app.set('views',path.resolve('./views'))
 app.use(express.json())
+// app.use("/",CheckAuth,staticRoute)
 app.use(express.urlencoded({extended:false}))
-app.use('/url', urlRouter)
+app.use(cookieParser())
+app.use('/url',restrictToLoggedinUserOnly, urlRouter)
 app.use('/user', userRoute)
-app.use('/',staticRoute)
+app.use('/',CheckAuth,staticRoute)
+
 
 
 

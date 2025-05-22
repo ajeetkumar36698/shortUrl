@@ -2,7 +2,8 @@ const express = require("express");
 const URL = require("../models/url");
 const router=express.Router();
 router.get('/',async(req,res)=>{
-    const allurls=await URL.find({})
+    if(!req.user) return res.redirect("/login")
+    const allurls=await URL.find({createBy:req.user._id})
     // console.log(allurls)
     return res.render('home',{urls:allurls})
 
