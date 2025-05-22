@@ -7,5 +7,15 @@ router.get('/',async(req,res)=>{
     return res.render('home',{urls:allurls})
 
 })
+router.get('/singup',async(req,res)=>{
+
+    return res.render('singup')
+
+})
+router.get('/login',async(req,res)=>{
+
+    return res.render('login')
+
+})
 
 module.exports=router

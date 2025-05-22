@@ -5,6 +5,7 @@ const { connectToMongoDB } = require("./connect.js")
 const URL = require("./models/url.js");
 const { render } = require("ejs");
 const staticRoute=require("./routes/staticRouter.js")
+const userRoute=require("./routes/user.js")
 const app = express()
 
 const PORT = 8000
@@ -13,6 +14,7 @@ app.set('views',path.resolve('./views'))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use('/url', urlRouter)
+app.use('/user', userRoute)
 app.use('/',staticRoute)
 
 
